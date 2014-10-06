@@ -2,7 +2,7 @@
 
 def formatter(activity_data):
     """
-        this is a special formatte r function to be used as a plugin of
+        this is a special formatter function to be used as a plugin of
         slak-kambanize app
         Process the activitie object and Return the formatted_message for
         this activity
@@ -23,12 +23,21 @@ def formatter(activity_data):
         u'External link changed': u':link:',
         u'Tags changed': u':triangular_flag_on_post:'
         }
+
     emoji = u''
     event = activity_data.get(u'event', u'')
     user = u'*%s*' % activity_data.get(u'author', u'')
     text = activity_data.get(u'text', u'')
     try:
         emoji = u'%s ' % events_emoji_traslator[event]
+        #special ispm formats to override here
+        if event == u'Assignee changed' and text == u'New assignee: None':
+            emoji = u':runner: '
+        if event == u'Task moved' and\
+                         u"to 'In Progress.Revis\xe3o Interna'" in text:
+            emoji = u':mag_right: '
+        if event == u'Tags changed' and u'New tag: empacotado' in text:
+            emoji = u':package: '
     except KeyError, e:
         # case of event not know, just return the name with italic format
         event = u'_%s_' % event
