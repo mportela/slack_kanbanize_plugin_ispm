@@ -14,13 +14,6 @@ def formatter(activity_data):
             u'author': u'mportela'}
         Return the formatted_string for the activity, based in the 'event'
     """
-    events_emoji_traslator = {
-        u'Task archived': u':+1:',
-        u'Attachments updated': u':paperclip:',
-        u'Task created': u':ticket:',
-        u'External link changed': u':link:',
-        u'Tags changed': u':triangular_flag_on_post:'
-        }
 
     event = activity_data.get(u'event', u'')
     user = u'*%s*' % activity_data.get(u'author', u'')
