@@ -44,7 +44,9 @@ def formatter(activity_data):
             return msg % user
 
         if event == u'Tags changed' and u'New tag: empacotado' in text:
-            emoji = u':package: '
+            msg = u':package: %s gerou pacote com a tarefa.'
+
+            return msg % user
 
     except KeyError, e:
         # case of event not know, just return the name with italic format

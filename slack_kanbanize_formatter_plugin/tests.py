@@ -41,6 +41,18 @@ class IspmFormatterTests(unittest.TestCase):
         self.assertEquals(msg,
             u":mag_right: *mportela* enviou a tarefa para review.")
 
+    def test_deploy_tag(self):
+        activity = {
+            u'event': u'Tags changed',
+            u'text': u'New tag: empacotado',
+            u'author': u'mportela'
+        }
+
+        msg = formatter(activity)
+
+        self.assertEquals(msg,
+            u":package: *mportela* gerou pacote com a tarefa.")
+
     def test_(self):
         return
         activity = {
