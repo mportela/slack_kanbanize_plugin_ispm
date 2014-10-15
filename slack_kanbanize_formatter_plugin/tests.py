@@ -74,8 +74,7 @@ class IspmFormatterTests(unittest.TestCase):
 
         msg = formatter(activity)
 
-        self.assertEquals(msg,
-            u":heavy_check_mark: *mportela* alterou a posição do card.")
+        self.assertEquals(msg, u"")
 
     def test_self_assign(self):
         activity = {

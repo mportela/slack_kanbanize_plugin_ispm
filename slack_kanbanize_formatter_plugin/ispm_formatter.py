@@ -73,9 +73,7 @@ def formatter(activity_data):
         emoji = ':heavy_check_mark:'
 
         if text == u'The task was reordered within the same board cell.':
-            msg = u'%s %s alterou a posição do card.'
-            
-            return msg % (emoji, user)
+            return ""
 
         if 'From' in text and 'to' in text:
             from_col, to_col = re.findall("\'(.*?)\'", text, re.U)
