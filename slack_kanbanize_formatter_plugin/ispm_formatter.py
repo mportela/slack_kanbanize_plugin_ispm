@@ -1,6 +1,37 @@
 # coding=utf-8
 import re
 
+FLOW = (
+    u'Já detalhados',
+    u'In Progress.Fazendo',
+    u'In Progress.Revis\xe3o Interna',
+    u'In Progress.Revis\xe3o externa',
+    u'Entregue',
+)
+
+def _get_flow_msg(text):
+    from_col, to_col = re.findall("\'(.*?)\'", text, re.U)
+
+    try:
+        if FLOW.index(to_col) == 2:
+            msg = u':mag_right: %s enviou a tarefa para review.'
+            return msg
+
+        if FLOW.index(from_col) == 0 and FLOW.index(to_col) == 1:
+            msg = u':boom: %s começou a trabalhar na tarefa.'
+            return msg
+
+        if FLOW.index(from_col) > FLOW.index(to_col):
+            # avançando tarefa
+            base_msg = u':leftwards_arrow_with_hook: %%s voltou o card para _%s_.' % to_col.split('.')[-1]
+            return base_msg
+        else:
+            base_msg = u':right_arrow: %%s avançou o card para _%s_.' % to_col.split('.')[-1]
+            return base_msg
+    except ValueError:
+        return u':left_right_arrow: %%s moveu o card de _%s_ para _%s_.' % (from_col, to_col)
+
+
 def formatter(activity_data):
     """
         This is a special formatter function to be used as a plugin of
@@ -70,21 +101,11 @@ def formatter(activity_data):
         return msg % (user, text)
 
     if event == u'Task moved':
-        emoji = ':heavy_check_mark:'
-
         if text == u'The task was reordered within the same board cell.':
             return ""
 
         if 'From' in text and 'to' in text:
-            from_col, to_col = re.findall("\'(.*?)\'", text, re.U)
-
-            if from_col.split('.')[0] == to_col.split('.')[0]:
-                from_col = from_col.split('.')[1]
-                to_col = to_col.split('.')[1]
-
-            msg = u"%s %s moveu o card de _%s_ para _%s_."
-
-            return msg % (emoji, user, from_col, to_col)
+            return _get_flow_msg(text) % user
 
     if event == "Task archived":
         title = text.split('Title ')[1]
