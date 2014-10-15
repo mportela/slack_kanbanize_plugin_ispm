@@ -173,6 +173,30 @@ class IspmFormatterTests(unittest.TestCase):
         self.assertEquals(msg,
             u":heavy_check_mark: *mportela* moveu o card de _Swimlane 1.Column 1_ para _Swimlane 2.Column 2_.")
 
+    def test_external_link_changed(self):
+        activity = {
+            u'event': u'External link changed',
+            u'text': u'http://google.com',
+            u'author': u'mportela'
+        }
+
+        msg = formatter(activity)
+
+        self.assertEquals(msg,
+            u':link: *mportela* alterou o link do card para _"http://google.com"_.')
+
+    def test_attachment_added(self):
+        activity = {
+            u'event': u'Attachments updated',
+            u'text': u'arquivo1.gif',
+            u'author': u'mportela'
+        }
+
+        msg = formatter(activity)
+
+        self.assertEquals(msg,
+            u':paperclip: *mportela* alterou os anexos do card: _"arquivo1.gif"_.')
+
     def _test_(self):
         activity = {
             u'event': u'Assignee changed',

@@ -48,6 +48,16 @@ def formatter(activity_data):
         
         return msg % (user, text)
 
+    if event == u'External link changed':
+        msg = u':link: %s alterou o link do card para _"%s"_.'
+        
+        return msg % (user, text)
+
+    if event == u'Attachments updated':
+        msg = u':paperclip: %s alterou os anexos do card: _"%s"_.'
+        
+        return msg % (user, text)
+
     if event == u'Task created':
         title = text.split('Task ')[1]
         msg = u':o: %s criou o card _"%s"_.'
