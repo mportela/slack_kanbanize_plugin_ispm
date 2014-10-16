@@ -167,7 +167,7 @@ class IspmFormatterTests(unittest.TestCase):
         msg = formatter(activity)
 
         self.assertEquals(msg,
-            u':link: *mportela* alterou o link do card para _"http://google.com"_.')
+            u':link: *mportela* alterou o link do card para http://google.com')
 
     def test_attachment_added(self):
         activity = {

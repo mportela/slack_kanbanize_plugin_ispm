@@ -80,7 +80,7 @@ def formatter(activity_data):
         return msg % (user, text)
 
     if event == u'External link changed':
-        msg = u':link: %s alterou o link do card para _"%s"_.'
+        msg = u':link: %s alterou o link do card para %s'
         
         return msg % (user, text)
 
